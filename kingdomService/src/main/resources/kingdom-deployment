@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kingdom
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kingdom
+  template:
+    metadata:
+      labels:
+        app: kingdom
+    spec:
+      containers:
+        -
+          image: thisIsCamelCasingRule/kingdomservice
+          name: kingdom
+          imagePullPolicy: Never
+          ports:
+            -
+              containerPort: 8082
+              name: kingdom
+          env:
+            - name: POSTGRES_ENDPOINT
+              value: "jdbc:postgresql://192.168.1.46:5432/"
+            - name: POSTGRES_PASSWORD
+              value: "123"
+            - name: POSTGRES_USERNAME
+              value: "postgres"
+            - name: KINGDOM_URL
+              value: "http://kingdom"
